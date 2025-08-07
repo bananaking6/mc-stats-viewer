@@ -313,10 +313,8 @@ h2 {
 }
 
 .toggle-text::before {
-    content: '\f021';
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
-    margin-right: 0.5rem;
     color: var(--accent-primary);
 }
 
@@ -735,4 +733,8 @@ h2 {
     .analytics-grid {
         gap: 1rem;
     }
+}
+
+.hidden {
+    display: none !important;
 }

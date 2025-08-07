@@ -8,7 +8,13 @@ let currentCharts = [];
 document.getElementById('savesFolderInput').addEventListener('change', handleFileSelect);
 
 function handleFileSelect(event) {
-    const files = event.target.files;
+    let files = event.target.files;
+    // check if it contains a 'saves' folder, if so move into it
+    const savesFolder = Array.from(files).find(file => file.webkitRelativePath.startsWith('saves/'));
+    if (savesFolder) {
+        files = Array.from(files).filter(file => file.webkitRelativePath.startsWith('saves/') && file.webkitRelativePath.endsWith('.json'));
+    }
+
     const statsContainer = document.getElementById('statsContainer');
     statsContainer.innerHTML = '<div class="loading">Loading stats...</div>';
 
@@ -256,9 +262,9 @@ function displayAllStats() {
         for (const [playerUUID, playerData] of Object.entries(combinedStats)) {
             html += `
                 <div class="player-card combined-player">
-                    <h3 class="player-title"><i class="fas fa-user"></i> ${playerData.username}</h3>
+                    <h3 class="player-title">${playerData.username}</h3>
                     <div class="worlds-played">
-                        <i class="fas fa-globe"></i> <strong>Worlds:</strong> ${playerData.worlds.join(', ')}
+                        <strong>Worlds:</strong> ${playerData.worlds.join(', ')}
                     </div>
                     <div class="player-stats">
                         ${formatPlayerStats(playerData.stats)}
@@ -302,11 +308,11 @@ function displayAllStats() {
     html += `<h2 class="section-title"><i class="fas fa-chart-area"></i> Advanced Analytics</h2>`;
     html += `
         <div class="analytics-grid">
-            <div class="chart-card large">
+            <div class="chart-card large hidden">
                 <h3><i class="fas fa-chart-bar"></i> Top Activities</h3>
                 <canvas id="activitiesChart"></canvas>
             </div>
-            <div class="chart-card large">
+            <div class="chart-card large hidden">
                 <h3><i class="fas fa-chart-line"></i> Distance Traveled</h3>
                 <canvas id="distanceChart"></canvas>
             </div>
@@ -461,7 +467,7 @@ function updateWorldsDisplay() {
         html += `
             <div class="world-section">
                 <h3 class="world-title">
-                    <i class="fas fa-globe"></i> ${worldData.name}
+                    ${worldData.name}
                     <span class="world-stats">
                         <i class="fas fa-users"></i> ${worldData.playerCount} players
                         <i class="fas fa-clock"></i> ${formatTime(worldData.totalPlayTime)}
@@ -474,7 +480,7 @@ function updateWorldsDisplay() {
             const username = playerNames[playerUUID] || `Player_${playerUUID.substring(0, 8)}`;
             html += `
                 <div class="player-card">
-                    <h4 class="player-title"><i class="fas fa-user"></i> ${username}</h4>
+                    <h4 class="player-title">${username}</h4>
                     <div class="player-stats">
                         ${formatPlayerStats(playerData.stats)}
                     </div>

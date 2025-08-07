@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MC Stats Viewer</title>
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+        <h1>MC Stats Viewer</h1>
+        <h2>Select your Minecraft saves folder to analyze player statistics across all worlds</h2>
+        
+        <div class="file-input-container">
+            <div class="file-input-wrapper">
+                <input type="file" id="savesFolderInput" webkitdirectory directory multiple />
+                <label for="savesFolderInput" class="file-input-label">
+                    Choose Minecraft Saves Folder
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Usually in %appdata%/.minecraft/saves</span>
+                </label>
+            </div>
+        </div>
+        
+        <div id="statsContainer"></div>
+        
+        <script src="script.js"></script>
+    </body>
+</html>
